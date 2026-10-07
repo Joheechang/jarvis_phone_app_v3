@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    JarvisAccessibilityService가 "다른 앱 화면을 읽고 대신 눌러주는" 데
+    필요한 권한 범위를 선언한다. 설정 > 접근성에서 사용자가 수동으로
+    켜야만 실제로 활성화된다(JarvisAccessibilityService.kt 주석 참고).
+
+    - accessibilityEventTypes="typeAllMask": 화면이 바뀌는 모든 이벤트를
+      받아야, "버튼이 나타날 때까지 기다렸다가 누르기" 같은 동작이 된다.
+    - canRetrieveWindowContent="true": 현재 화면의 버튼/글자를 읽을 수
+      있어야(그래야 "전송"이라는 글자가 어디 있는지 찾을 수 있음).
+    - canPerformGestures="true": 좌표 기반 탭/스와이프가 필요할 때를 대비
+      (기본은 텍스트로 노드를 찾아 클릭하는 방식을 우선 쓴다).
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeAllMask"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagDefault|flagReportViewIds|flagRetrieveInteractiveWindows"
+    android:canRetrieveWindowContent="true"
+    android:canPerformGestures="true"
+    android:notificationTimeout="50"
+    android:description="@string/accessibility_service_description" />

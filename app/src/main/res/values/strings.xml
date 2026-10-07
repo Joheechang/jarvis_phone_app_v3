@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">자비스 (레인보우컴퓨터)</string>
+    <string name="notification_channel_name">자비스 음성 대기</string>
+    <string name="notification_title">자비스가 대기 중이에요</string>
+    <string name="notification_text">눌러서 바로 말하기</string>
+    <string name="action_speak">🎙️ 말하기</string>
+    <string name="accessibility_service_description">자비스가 음성 명령으로 다른 앱(카카오톡 등)의 화면을 대신 눌러주거나 글자를 입력할 수 있게 해줍니다. 이 권한을 켜면 자비스가 화면 내용을 읽을 수 있으니, 이 PC 프로그램을 직접 설정한 본인만 켜주세요.</string>
+</resources>

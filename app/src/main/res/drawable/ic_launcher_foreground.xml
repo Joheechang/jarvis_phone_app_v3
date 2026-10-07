@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 간단한 마이크 모양 — 아이콘 전용 그래픽 리소스라 저작권 걱정 없는
+     기하 도형(원+사각형+선)만으로 구성했다. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 마이크 몸통 -->
+    <path
+        android:fillColor="#F4A300"
+        android:pathData="M54,30 m-14,0 a14,14 0 1,0 28,0 a14,14 0 1,0 -28,0 Z M40,44 a14,14 0 0,0 28,0 L68,58 a14,14 0 0,1 -28,0 Z" />
+    <!-- 마이크 받침대 -->
+    <path
+        android:fillColor="#F4A300"
+        android:pathData="M38,56 a16,16 0 0,0 32,0 L76,56 a22,22 0 0,1 -19,21.8 L57,86 L63,86 L63,92 L45,92 L45,86 L51,86 L51,77.8 A22,22 0 0,1 32,56 Z" />
+</vector>

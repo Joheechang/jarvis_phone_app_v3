@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🤖 자비스 (레인보우컴퓨터 PC 연동)"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:text="PC의 \"AI 에이전트 오피스\"와 같은 Wi-Fi에서 연결해요."
+            android:textColor="#666666" />
+
+        <!-- 서버 연결 설정 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PC 연결 설정"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+        <EditText
+            android:id="@+id/editHost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="PC IP 주소 (예: 192.168.0.12)"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/editPort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="포트 (PC 앱의 \"폰 연동 서버\" 설정과 동일하게)"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editToken"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="인증 토큰 (PC 앱의 \"폰 연동 서버\" 화면에 표시된 값)"
+            android:inputType="textPassword" />
+
+        <CheckBox
+            android:id="@+id/checkHttps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PC에서 HTTPS(암호화)를 켜뒀어요" />
+
+        <Button
+            android:id="@+id/btnSaveAndPing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="저장하고 연결 확인" />
+
+        <TextView
+            android:id="@+id/textPingResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#666666" />
+
+        <!-- 접근성 권한 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="다른 앱 직접 조작 (선택)"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\"카카오톡에서 OOO에게 메시지 보내줘\"처럼 다른 앱 화면을 대신 눌러주는 기능을 쓰려면, 접근성 설정에서 \"자비스\"를 직접 켜주세요. 매우 강력한 권한이니 본인 폰에서만 켜세요."
+            android:textColor="#666666"
+            android:layout_marginTop="4dp" />
+
+        <Button
+            android:id="@+id/btnOpenAccessibilitySettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="접근성 설정 열기" />
+
+        <TextView
+            android:id="@+id/textAccessibilityStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#666666" />
+
+        <!-- 항상 대기 알림 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="항상 대기 알림 (선택)"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="진짜 \"헤이 빅스비\"처럼 항상 듣고 있는 건 배터리/사생활 부담이 커서 뺐어요. 대신 알림을 하나 띄워두면, 앱을 열지 않고도 알림만 눌러서 바로 말할 수 있어요."
+            android:textColor="#666666"
+            android:layout_marginTop="4dp" />
+
+        <Switch
+            android:id="@+id/switchAlwaysOnNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="항상 대기 알림 켜기" />
+
+        <!-- 호출어(wake-word) 인식 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="호출어로 부르기 (베타)"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\"자비스야\"처럼 원하는 이름을 부르면 자동으로 듣기 시작해요. 완전히 폰 안에서만 처리돼요(인터넷 불필요, 인식 중인 내용이 PC나 외부로 전송되지 않음). 처음 한 번만 음성 인식 모델(약 80MB)을 내려받아야 하고, 켜두는 동안은 마이크가 계속 켜져 있어 배터리를 조금 더 써요."
+            android:textColor="#666666"
+            android:layout_marginTop="4dp" />
+
+        <EditText
+            android:id="@+id/editWakeWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="호출어 (예: 자비스)"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/btnSaveWakeWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="호출어 저장" />
+
+        <Button
+            android:id="@+id/btnDownloadModel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="음성 인식 모델 다운로드 (약 80MB, Wi-Fi 권장)" />
+
+        <ProgressBar
+            android:id="@+id/progressModelDownload"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:max="100"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textModelStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#666666" />
+
+        <Switch
+            android:id="@+id/switchWakeWordEnabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="호출어 상시 대기 켜기" />
+
+        <!-- 음성 명령 -->
+        <Button
+            android:id="@+id/btnSpeak"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="28dp"
+            android:text="🎙️ 눌러서 말하기"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="실행 기록"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/textLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="monospace"
+            android:textSize="13sp"
+            android:text="" />
+
+    </LinearLayout>
+</ScrollView>

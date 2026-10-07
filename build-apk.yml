@@ -1,0 +1,44 @@
+name: APK 빌드
+
+# GitHub 서버에서 대신 안드로이드 앱(.apk)을 빌드해주는 설정이에요.
+# 이 저장소(repo)에 코드를 올리거나(main 브랜치로 push), 또는 GitHub
+# 웹사이트의 "Actions" 탭에서 수동으로 "Run workflow" 버튼을 눌러도
+# 실행돼요. 끝나면 그 실행 결과 페이지 아래쪽 "Artifacts"에서
+# jarvis-phone-app-debug-apk.zip을 받을 수 있고, 그 안에 설치 가능한
+# app-debug.apk 파일이 들어있어요.
+#
+# 서명(signing) 없이 디버그용으로만 빌드해요 — 개인 폰에 직접 설치해서
+# 쓰는 용도라 문제없어요. 다만 "출처를 알 수 없는 앱" 설치를 폰에서
+# 허용해줘야 설치가 돼요(Play 스토어 앱이 아니라서 안드로이드가 기본
+# 경고를 띄워요 — 정상입니다).
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 코드 받아오기
+        uses: actions/checkout@v4
+
+      - name: JDK 17 설치
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Gradle 실행 권한 부여
+        run: chmod +x gradlew
+
+      - name: 디버그 APK 빌드
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: 빌드 결과(.apk) 업로드
+        uses: actions/upload-artifact@v4
+        with:
+          name: jarvis-phone-app-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- PC(레인보우컴퓨터 AI 에이전트 오피스)의 "폰 연동 서버"에 명령을
+         보내기 위한 기본 네트워크 권한. 같은 Wi-Fi 안에서만 통신하지만
+         안드로이드는 이것도 일반 인터넷 권한으로 취급한다. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- 음성 명령 인식(마이크)용. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- "말하기" 알림을 띄워둔 채 대기하는 포그라운드 서비스용(안드로이드
+         9+는 포그라운드 서비스 종류를 명시해야 함). -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- "카카오톡 열어줘"처럼 이름만 듣고 설치된 앱을 찾아 실행하려면
+         패키지 목록 전체를 볼 수 있어야 한다. 이 권한은 플레이스토어에
+         올리는 앱이면 심사에서 제한되지만, 이 앱은 사이드로드 전용
+         개인용 앱이라 문제 없다(README_설치방법.md 참고). -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Jarvis"
+        android:supportsRtl="false"
+        android:usesCleartextTraffic="true">
+        <!-- usesCleartextTraffic: PC "폰 연동 서버"는 기본값이 HTTP(암호화
+             안 함, 같은 집 Wi-Fi 전제)인데, 안드로이드 9(API 28)부터는
+             앱이 평문 HTTP 통신을 기본적으로 차단한다. 이 앱은 처음부터
+             "같은 집 Wi-Fi에서만 쓰는 개인용 도구"로 설계됐으므로 명시적으로
+             허용해둔다(LocalServerClient.kt의 HTTPS 자체서명 인증서 처리와
+             같은 맥락의 결정). -->
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- "항상 대기" 알림을 띄워놓고, 알림의 "🎙️ 말하기" 버튼을 누르면
+             그 즉시(앱을 열지 않고도) 음성 인식 → PC 전송 → 실행까지
+             한 번에 처리하는 포그라운드 서비스. 진짜 "헤이 빅스비" 같은
+             상시 음성 대기(wake-word)는 배터리/개인정보 부담이 커서
+             넣지 않았고, 대신 "알림 탭 한 번"으로 비슷한 체감을 준다 —
+             자세한 설계 이유는 JarvisListenService.kt 주석 참고. -->
+        <service
+            android:name=".JarvisListenService"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
+
+        <!-- 호출어(예: "자비스")를 상시 오프라인으로 대기하다가 들리면 바로
+             다음 명령을 듣고 실행하는 서비스. 설정 화면에서 모델을 내려받고
+             스위치를 켜야 동작한다. WakeWordListenService.kt 주석 참고. -->
+        <service
+            android:name=".WakeWordListenService"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
+
+        <!-- "Bixby처럼 다른 앱도 직접 조작" 기능의 핵심 — 사용자가 설정에서
+             수동으로 켜야만 동작한다(안드로이드가 보안상 자동 허용을
+             금지함). JarvisAccessibilityService.kt 주석 참고. -->
+        <service
+            android:name=".JarvisAccessibilityService"
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+    </application>
+
+    <!-- 안드로이드 11+에서 다른 앱을 URL 스킴/패키지로 "실행 가능한지"
+         확인하려면(PackageManager.queryIntentActivities 등) 여기 미리
+         선언해둬야 보인다. 위 QUERY_ALL_PACKAGES로도 대부분 커버되지만,
+         내비게이션 앱들은 명시적으로 한 번 더 선언해 확실히 한다. -->
+    <queries>
+        <package android:name="com.google.android.apps.maps" />
+        <package android:name="net.daum.android.map" />
+        <package android:name="com.nhn.android.nmap" />
+        <package android:name="com.locnall.KimGiSa" />
+        <package android:name="com.skt.tmap.ku" />
+        <package android:name="com.kakao.talk" />
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="geo" />
+        </intent>
+    </queries>
+</manifest>
